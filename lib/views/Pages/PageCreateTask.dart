@@ -73,18 +73,29 @@ class _PagecreateTaskState extends State<PagecreateTask> {
                   priority = value;
                   setState(() {});
                 }),
-            ElevatedButton(
-              onPressed: () {
-                task.priority = priority;
-                saveTask(_key, task, provider);
-                Navigator.pop(context);
-                showDialog(
-                  context: context,
-                  builder: (_) => dialog("Task created", Icons.check),
-                );
-              },
-              child: const Text("Save"),
-            )
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                    task.priority = priority;
+                    saveTask(_key, task, provider);
+                    Navigator.pop(context);
+                    showDialog(
+                      context: context,
+                      builder: (_) => dialog("Task created", Icons.check),
+                    );
+                  },
+                  child: const Text("Save"),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: const Text("Cancel"),
+                )
+              ],
+            ),
           ],
         ),
       ),
