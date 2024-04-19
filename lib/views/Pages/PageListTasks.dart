@@ -16,6 +16,8 @@ class PageListTasks extends StatefulWidget {
 class _PageListTasksState extends State<PageListTasks> {
   late TaskProvider provider;
 
+  final TaskController _controller = TaskController();
+
   @override
   Widget build(BuildContext context) {
     provider = Provider.of(context);
@@ -34,6 +36,10 @@ class _PageListTasksState extends State<PageListTasks> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
+/*           _controller
+              .create({"title": "Tareita"})
+              .then((id) => print(id))
+              .catchError((error) => print(error)); */
           Navigator.of(context).push(MaterialPageRoute(
             builder: (context) => PagecreateTask(),
           ));
@@ -115,6 +121,7 @@ class _PageListTasksState extends State<PageListTasks> {
                 )),
             IconButton(
               onPressed: () {
+                _controller.delete(task.id);
                 deleteTask(task, provider);
                 showDialog(
                   context: context,

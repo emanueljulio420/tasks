@@ -6,6 +6,9 @@ import 'package:task/models/Task.dart';
 
 class PageEditTask extends StatelessWidget {
   // Atributos
+
+  final TaskController _controller = TaskController();
+
   final GlobalKey<FormState> _key = GlobalKey();
   Task task = Task.empty();
   int index = 0;
@@ -55,6 +58,7 @@ class PageEditTask extends StatelessWidget {
             ),
             ElevatedButton(
               onPressed: () {
+                _controller.update(task.tomap(), task.id);
                 editTask(_key, task, provider, index);
                 Navigator.pop(context);
                 showDialog(

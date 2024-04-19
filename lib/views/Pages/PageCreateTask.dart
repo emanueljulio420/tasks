@@ -13,6 +13,8 @@ class _PagecreateTaskState extends State<PagecreateTask> {
   // Atributos
   final GlobalKey<FormState> _key = GlobalKey();
 
+  final TaskController _controller = TaskController();
+
   Task task = Task.empty();
 
   dynamic priority = 0;
@@ -79,6 +81,10 @@ class _PagecreateTaskState extends State<PagecreateTask> {
                 ElevatedButton(
                   onPressed: () {
                     task.priority = priority;
+                    _controller
+                        .create(task.tomap())
+                        .then((id) => task.id = id)
+                        .catchError((error) => print(error));
                     saveTask(_key, task, provider);
                     Navigator.pop(context);
                     showDialog(

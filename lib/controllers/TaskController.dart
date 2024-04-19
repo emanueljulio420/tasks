@@ -1,6 +1,33 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:task/controllers/TaskProvider.dart';
 import 'package:task/models/Task.dart';
+
+class TaskController {
+  FirebaseFirestore db = FirebaseFirestore.instance;
+
+  final String collection = "task";
+
+  Future<String> create(Map<String, dynamic> task) async {
+    DocumentReference response = await db.collection(collection).add(task);
+    return response.id;
+  }
+
+  Future<void> update(Map<String, dynamic> task, String id) async {
+    await db.collection(collection).doc(id).update(task);
+  }
+
+  Future<void> delete(String id) async {
+    await db.collection(collection).doc(id).delete();
+  }
+
+  getTask() async {
+    QuerySnapshot snapshot = await db.collection(collection).get();
+    return snapshot.docs;
+  }
+}
 
 String? validate(value) {
   return value == null || value!.isEmpty ? "Este campo es obligatorio" : null;
